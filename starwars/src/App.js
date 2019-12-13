@@ -3,6 +3,7 @@ import Info from './components/Info';
 import PeopleGrid from './components/People/PeopleGrid';
 import axios from 'axios';
 import './App.css';
+import { MainH1 } from './components/Styles';
 
 const App = () => {
   // Try to think through what state you'll need for this app before starting. Then build out
@@ -15,11 +16,13 @@ const App = () => {
   const [swapiData, setSwapiData] = useState([]);
   
   useEffect(() => {
+    const proxy = 'https://raw.githubusercontent.com/akabab/starwars-api/0.2.1/api/all.json';
+    const url = 'https://swapi.co/api/people';
     axios
-    .get('https://swapi.co/api/people/')
+    .get(proxy)
     .then(response => {
-      console.log(response.data.results);
-      setSwapiData(response.data.results);
+      console.log(response.data);
+      setSwapiData(response.data);
     })
     .catch(error => {
       console.log('There was an error at the main axios call: ' + error);
@@ -29,9 +32,12 @@ const App = () => {
 
   return (
     <div className="App">
-      <h1 className="Header">React Wars</h1>
+      <MainH1 className="Header">React Wars</MainH1>
       <Info />
-      <PeopleGrid swapiData={swapiData} />
+      <div>
+        <PeopleGrid swapiData={swapiData} />
+      </div>
+      
     </div>
   );
 }
